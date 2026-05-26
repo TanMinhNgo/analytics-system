@@ -9,7 +9,11 @@
     "start": "node src/index.js",
     "test": "vitest run",
     "format:check": "prettier --check .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "db:push": "drizzle-kit push",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio",
+    "seed": "node src/seed.js"
   },
   "keywords": [],
   "author": "TanMinhNgo",
@@ -36,6 +40,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "drizzle-kit": "^0.30.0",
     "nodemon": "^3.1.4",
     "pino-pretty": "^11.2.2",
     "prettier": "^3.3.3",
