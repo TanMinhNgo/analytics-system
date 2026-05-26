@@ -25,7 +25,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${plexMono.variable} h-full antialiased dark`}>
+    <html
+      lang="en"
+      className={`${spaceGrotesk.variable} ${plexMono.variable} h-full antialiased dark`}
+    >
       <body className="min-h-full flex flex-col">
         <Providers>{children}</Providers>
       </body>
