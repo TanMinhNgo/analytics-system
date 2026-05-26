@@ -54,25 +54,20 @@ app.get("/health", (req, res) => {
 
 registerSwagger(app);
 
+// Serve static files in production (without fallback yet)
+let staticDir = null;
 if (env.NODE_ENV === "production") {
-  // Check multiple possible static directories for Docker/Render deployment
   const possibleStaticDirs = [
     path.join(__dirname, "../public"),        // Root Dockerfile: ./public
     path.join(__dirname, "../../frontend/out"), // Monorepo structure
     path.join(__dirname, "../..", "public"),    // Alternative root
   ];
   
-  const staticDir = possibleStaticDirs.find(dir => fs.existsSync(dir));
+  staticDir = possibleStaticDirs.find(dir => fs.existsSync(dir));
   
   if (staticDir) {
     logger.info(`Serving static files from: ${staticDir}`);
     app.use(express.static(staticDir));
-    app.get("*", (req, res, next) => {
-      if (req.path.startsWith("/api") || req.path.startsWith("/docs") || req.path === "/health") {
-        return next();
-      }
-      return res.sendFile(path.join(staticDir, "index.html"));
-    });
   } else {
     logger.warn("No static directory found for frontend");
   }
@@ -107,6 +102,13 @@ app.use(
   maskResponse,
   datamartsRouter
 );
+
+// SPA fallback - must be after all API routes
+if (staticDir) {
+  app.use((req, res) => {
+    res.sendFile(path.join(staticDir, "index.html"));
+  });
+}
 
 app.use((err, req, res, next) => {
   logger.error({ err }, "Unhandled error");
