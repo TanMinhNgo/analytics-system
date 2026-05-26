@@ -10,234 +10,243 @@ async function seed() {
   console.log("👥 Seeding users...");
   const passwordHash = await bcrypt.hash("admin123", 10);
 
-  const insertedUsers = await db.insert(users).values([
-    {
-      name: "Ava Admin",
-      email: "admin@analytics.local",
-      passwordHash,
-      role: "ADMIN",
-      active: true,
-    },
-    {
-      name: "Ethan Engineer",
-      email: "engineer@analytics.local",
-      passwordHash: await bcrypt.hash("engineer123", 10),
-      role: "DATA_ENGINEER",
-      active: true,
-    },
-    {
-      name: "Nora Analyst",
-      email: "analyst@analytics.local",
-      passwordHash: await bcrypt.hash("analyst123", 10),
-      role: "ANALYST",
-      active: true,
-    },
-    {
-      name: "Victor Viewer",
-      email: "viewer@analytics.local",
-      passwordHash: await bcrypt.hash("viewer123", 10),
-      role: "VIEWER",
-      active: true,
-    },
-    {
-      name: "Sophie Manager",
-      email: "manager@analytics.local",
-      passwordHash: await bcrypt.hash("manager123", 10),
-      role: "ANALYST",
-      active: true,
-    },
-  ]).returning();
+  const insertedUsers = await db
+    .insert(users)
+    .values([
+      {
+        name: "Ava Admin",
+        email: "admin@analytics.local",
+        passwordHash,
+        role: "ADMIN",
+        active: true,
+      },
+      {
+        name: "Ethan Engineer",
+        email: "engineer@analytics.local",
+        passwordHash: await bcrypt.hash("engineer123", 10),
+        role: "DATA_ENGINEER",
+        active: true,
+      },
+      {
+        name: "Nora Analyst",
+        email: "analyst@analytics.local",
+        passwordHash: await bcrypt.hash("analyst123", 10),
+        role: "ANALYST",
+        active: true,
+      },
+      {
+        name: "Victor Viewer",
+        email: "viewer@analytics.local",
+        passwordHash: await bcrypt.hash("viewer123", 10),
+        role: "VIEWER",
+        active: true,
+      },
+      {
+        name: "Sophie Manager",
+        email: "manager@analytics.local",
+        passwordHash: await bcrypt.hash("manager123", 10),
+        role: "ANALYST",
+        active: true,
+      },
+    ])
+    .returning();
   console.log(`✅ Created ${insertedUsers.length} users`);
 
   // Insert Data Sources
   console.log("🔌 Seeding data sources...");
-  const insertedSources = await db.insert(dataSources).values([
-    {
-      name: "Apollo ERP",
-      type: "ERP",
-      config: { 
-        host: "erp.internal", 
-        database: "apollo",
-        port: 5432,
-        schema: "public"
+  const insertedSources = await db
+    .insert(dataSources)
+    .values([
+      {
+        name: "Apollo ERP",
+        type: "ERP",
+        config: {
+          host: "erp.internal",
+          database: "apollo",
+          port: 5432,
+          schema: "public",
+        },
+        status: "active",
+        enabled: true,
+        lastSyncAt: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
       },
-      status: "active",
-      enabled: true,
-      lastSyncAt: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
-    },
-    {
-      name: "Nova POS",
-      type: "POS",
-      config: { 
-        host: "pos.internal", 
-        database: "nova",
-        port: 5432,
-        version: "v2.1"
+      {
+        name: "Nova POS",
+        type: "POS",
+        config: {
+          host: "pos.internal",
+          database: "nova",
+          port: 5432,
+          version: "v2.1",
+        },
+        status: "active",
+        enabled: true,
+        lastSyncAt: new Date(Date.now() - 30 * 60 * 1000), // 30 mins ago
       },
-      status: "active",
-      enabled: true,
-      lastSyncAt: new Date(Date.now() - 30 * 60 * 1000), // 30 mins ago
-    },
-    {
-      name: "Salesforce CRM",
-      type: "CRM",
-      config: { 
-        apiEndpoint: "https://api.salesforce.com",
-        apiVersion: "v52.0"
+      {
+        name: "Salesforce CRM",
+        type: "CRM",
+        config: {
+          apiEndpoint: "https://api.salesforce.com",
+          apiVersion: "v52.0",
+        },
+        status: "active",
+        enabled: true,
+        lastSyncAt: new Date(Date.now() - 4 * 60 * 60 * 1000), // 4 hours ago
       },
-      status: "active",
-      enabled: true,
-      lastSyncAt: new Date(Date.now() - 4 * 60 * 60 * 1000), // 4 hours ago
-    },
-    {
-      name: "Azure Data Warehouse",
-      type: "WAREHOUSE",
-      config: { 
-        host: "analytics.database.windows.net",
-        database: "warehouse_prod",
-        port: 1433
+      {
+        name: "Azure Data Warehouse",
+        type: "WAREHOUSE",
+        config: {
+          host: "analytics.database.windows.net",
+          database: "warehouse_prod",
+          port: 1433,
+        },
+        status: "active",
+        enabled: true,
+        lastSyncAt: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1 day ago
       },
-      status: "active",
-      enabled: true,
-      lastSyncAt: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1 day ago
-    },
-    {
-      name: "Shopify Store",
-      type: "E_COMMERCE",
-      config: { 
-        storeUrl: "https://mystore.myshopify.com",
-        apiVersion: "2024-01"
+      {
+        name: "Shopify Store",
+        type: "E_COMMERCE",
+        config: {
+          storeUrl: "https://mystore.myshopify.com",
+          apiVersion: "2024-01",
+        },
+        status: "active",
+        enabled: true,
+        lastSyncAt: new Date(Date.now() - 1 * 60 * 60 * 1000), // 1 hour ago
       },
-      status: "active",
-      enabled: true,
-      lastSyncAt: new Date(Date.now() - 1 * 60 * 60 * 1000), // 1 hour ago
-    },
-    {
-      name: "Legacy MySQL DB",
-      type: "DATABASE",
-      config: { 
-        host: "legacy.internal",
-        database: "old_system",
-        port: 3306
+      {
+        name: "Legacy MySQL DB",
+        type: "DATABASE",
+        config: {
+          host: "legacy.internal",
+          database: "old_system",
+          port: 3306,
+        },
+        status: "inactive",
+        enabled: false,
+        lastSyncAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // 30 days ago
       },
-      status: "inactive",
-      enabled: false,
-      lastSyncAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // 30 days ago
-    },
-    {
-      name: "Google Analytics API",
-      type: "API",
-      config: { 
-        propertyId: "UA-123456789-1",
-        apiVersion: "v4"
+      {
+        name: "Google Analytics API",
+        type: "API",
+        config: {
+          propertyId: "UA-123456789-1",
+          apiVersion: "v4",
+        },
+        status: "active",
+        enabled: true,
+        lastSyncAt: new Date(Date.now() - 6 * 60 * 60 * 1000), // 6 hours ago
       },
-      status: "active",
-      enabled: true,
-      lastSyncAt: new Date(Date.now() - 6 * 60 * 60 * 1000), // 6 hours ago
-    },
-    {
-      name: "Stripe Payments",
-      type: "PAYMENT",
-      config: { 
-        apiEndpoint: "https://api.stripe.com",
-        webhookEnabled: true
+      {
+        name: "Stripe Payments",
+        type: "PAYMENT",
+        config: {
+          apiEndpoint: "https://api.stripe.com",
+          webhookEnabled: true,
+        },
+        status: "active",
+        enabled: true,
+        lastSyncAt: new Date(Date.now() - 15 * 60 * 1000), // 15 mins ago
       },
-      status: "active",
-      enabled: true,
-      lastSyncAt: new Date(Date.now() - 15 * 60 * 1000), // 15 mins ago
-    },
-  ]).returning();
+    ])
+    .returning();
   console.log(`✅ Created ${insertedSources.length} data sources`);
 
   // Insert ETL Runs
   console.log("⚙️ Seeding ETL runs...");
   const now = new Date();
-  const insertedRuns = await db.insert(etlRuns).values([
-    // Completed runs
-    {
-      sourceId: insertedSources[0].id, // Apollo ERP
-      status: "completed",
-      rowsProcessed: 15240,
-      durationMs: 45000,
-      startedAt: new Date(now.getTime() - 3 * 60 * 60 * 1000),
-      finishedAt: new Date(now.getTime() - 3 * 60 * 60 * 1000 + 45000),
-    },
-    {
-      sourceId: insertedSources[1].id, // Nova POS
-      status: "completed",
-      rowsProcessed: 8920,
-      durationMs: 32000,
-      startedAt: new Date(now.getTime() - 2 * 60 * 60 * 1000),
-      finishedAt: new Date(now.getTime() - 2 * 60 * 60 * 1000 + 32000),
-    },
-    {
-      sourceId: insertedSources[2].id, // Salesforce CRM
-      status: "completed",
-      rowsProcessed: 5420,
-      durationMs: 67000,
-      startedAt: new Date(now.getTime() - 5 * 60 * 60 * 1000),
-      finishedAt: new Date(now.getTime() - 5 * 60 * 60 * 1000 + 67000),
-    },
-    {
-      sourceId: insertedSources[4].id, // Shopify Store
-      status: "completed",
-      rowsProcessed: 12350,
-      durationMs: 28000,
-      startedAt: new Date(now.getTime() - 1 * 60 * 60 * 1000),
-      finishedAt: new Date(now.getTime() - 1 * 60 * 60 * 1000 + 28000),
-    },
-    {
-      sourceId: insertedSources[7].id, // Stripe Payments
-      status: "completed",
-      rowsProcessed: 3210,
-      durationMs: 15000,
-      startedAt: new Date(now.getTime() - 30 * 60 * 1000),
-      finishedAt: new Date(now.getTime() - 30 * 60 * 1000 + 15000),
-    },
-    // Failed run
-    {
-      sourceId: insertedSources[3].id, // Azure Data Warehouse
-      status: "failed",
-      rowsProcessed: 1200,
-      durationMs: 12000,
-      startedAt: new Date(now.getTime() - 4 * 60 * 60 * 1000),
-      finishedAt: new Date(now.getTime() - 4 * 60 * 60 * 1000 + 12000),
-    },
-    // Running job
-    {
-      sourceId: insertedSources[6].id, // Google Analytics API
-      status: "running",
-      rowsProcessed: 2100,
-      durationMs: 0,
-      startedAt: new Date(now.getTime() - 5 * 60 * 1000),
-      finishedAt: null,
-    },
-    // More historical completed runs
-    {
-      sourceId: insertedSources[0].id, // Apollo ERP (yesterday)
-      status: "completed",
-      rowsProcessed: 14890,
-      durationMs: 43000,
-      startedAt: new Date(now.getTime() - 27 * 60 * 60 * 1000),
-      finishedAt: new Date(now.getTime() - 27 * 60 * 60 * 1000 + 43000),
-    },
-    {
-      sourceId: insertedSources[1].id, // Nova POS (yesterday)
-      status: "completed",
-      rowsProcessed: 9120,
-      durationMs: 35000,
-      startedAt: new Date(now.getTime() - 26 * 60 * 60 * 1000),
-      finishedAt: new Date(now.getTime() - 26 * 60 * 60 * 1000 + 35000),
-    },
-    {
-      sourceId: insertedSources[5].id, // Legacy MySQL DB (old failed run)
-      status: "failed",
-      rowsProcessed: 0,
-      durationMs: 5000,
-      startedAt: new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000),
-      finishedAt: new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000 + 5000),
-    },
-  ]).returning();
+  const insertedRuns = await db
+    .insert(etlRuns)
+    .values([
+      // Completed runs
+      {
+        sourceId: insertedSources[0].id, // Apollo ERP
+        status: "completed",
+        rowsProcessed: 15240,
+        durationMs: 45000,
+        startedAt: new Date(now.getTime() - 3 * 60 * 60 * 1000),
+        finishedAt: new Date(now.getTime() - 3 * 60 * 60 * 1000 + 45000),
+      },
+      {
+        sourceId: insertedSources[1].id, // Nova POS
+        status: "completed",
+        rowsProcessed: 8920,
+        durationMs: 32000,
+        startedAt: new Date(now.getTime() - 2 * 60 * 60 * 1000),
+        finishedAt: new Date(now.getTime() - 2 * 60 * 60 * 1000 + 32000),
+      },
+      {
+        sourceId: insertedSources[2].id, // Salesforce CRM
+        status: "completed",
+        rowsProcessed: 5420,
+        durationMs: 67000,
+        startedAt: new Date(now.getTime() - 5 * 60 * 60 * 1000),
+        finishedAt: new Date(now.getTime() - 5 * 60 * 60 * 1000 + 67000),
+      },
+      {
+        sourceId: insertedSources[4].id, // Shopify Store
+        status: "completed",
+        rowsProcessed: 12350,
+        durationMs: 28000,
+        startedAt: new Date(now.getTime() - 1 * 60 * 60 * 1000),
+        finishedAt: new Date(now.getTime() - 1 * 60 * 60 * 1000 + 28000),
+      },
+      {
+        sourceId: insertedSources[7].id, // Stripe Payments
+        status: "completed",
+        rowsProcessed: 3210,
+        durationMs: 15000,
+        startedAt: new Date(now.getTime() - 30 * 60 * 1000),
+        finishedAt: new Date(now.getTime() - 30 * 60 * 1000 + 15000),
+      },
+      // Failed run
+      {
+        sourceId: insertedSources[3].id, // Azure Data Warehouse
+        status: "failed",
+        rowsProcessed: 1200,
+        durationMs: 12000,
+        startedAt: new Date(now.getTime() - 4 * 60 * 60 * 1000),
+        finishedAt: new Date(now.getTime() - 4 * 60 * 60 * 1000 + 12000),
+      },
+      // Running job
+      {
+        sourceId: insertedSources[6].id, // Google Analytics API
+        status: "running",
+        rowsProcessed: 2100,
+        durationMs: 0,
+        startedAt: new Date(now.getTime() - 5 * 60 * 1000),
+        finishedAt: null,
+      },
+      // More historical completed runs
+      {
+        sourceId: insertedSources[0].id, // Apollo ERP (yesterday)
+        status: "completed",
+        rowsProcessed: 14890,
+        durationMs: 43000,
+        startedAt: new Date(now.getTime() - 27 * 60 * 60 * 1000),
+        finishedAt: new Date(now.getTime() - 27 * 60 * 60 * 1000 + 43000),
+      },
+      {
+        sourceId: insertedSources[1].id, // Nova POS (yesterday)
+        status: "completed",
+        rowsProcessed: 9120,
+        durationMs: 35000,
+        startedAt: new Date(now.getTime() - 26 * 60 * 60 * 1000),
+        finishedAt: new Date(now.getTime() - 26 * 60 * 60 * 1000 + 35000),
+      },
+      {
+        sourceId: insertedSources[5].id, // Legacy MySQL DB (old failed run)
+        status: "failed",
+        rowsProcessed: 0,
+        durationMs: 5000,
+        startedAt: new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000),
+        finishedAt: new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000 + 5000),
+      },
+    ])
+    .returning();
   console.log(`✅ Created ${insertedRuns.length} ETL runs`);
 
   // Insert ETL Logs
@@ -248,7 +257,10 @@ async function seed() {
   logsToInsert.push(
     { runId: insertedRuns[0].id, message: "ETL job started for Apollo ERP" },
     { runId: insertedRuns[0].id, message: "Connected to source database successfully" },
-    { runId: insertedRuns[0].id, message: "Extracting data from tables: orders, customers, products" },
+    {
+      runId: insertedRuns[0].id,
+      message: "Extracting data from tables: orders, customers, products",
+    },
     { runId: insertedRuns[0].id, message: "Processed 5000 rows from orders table" },
     { runId: insertedRuns[0].id, message: "Processed 8000 rows from customers table" },
     { runId: insertedRuns[0].id, message: "Processed 2240 rows from products table" },

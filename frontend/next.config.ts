@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   // Disable server-side features for static export
   experimental: {
-    optimizePackageImports: ['lucide-react', 'recharts'],
+    optimizePackageImports: ["lucide-react", "recharts"],
   },
 };
 
