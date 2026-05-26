@@ -10,7 +10,6 @@ let worker;
 const steps = ["SELECT", "EXTRACT", "TRANSFORM", "INTEGRATE", "LOAD"];
 
 async function initQueues() {
-
   if (queue) {
     return queue;
   }
