@@ -26,10 +26,20 @@ type NavItem = {
 
 const navItems = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutGrid, roles: "all" },
-  { label: "Data Sources", href: "/datasources", icon: Database, roles: ["ADMIN", "DATA_ENGINEER"] },
+  {
+    label: "Data Sources",
+    href: "/datasources",
+    icon: Database,
+    roles: ["ADMIN", "DATA_ENGINEER"],
+  },
   { label: "ETL Monitor", href: "/etl", icon: Activity, roles: ["ADMIN", "DATA_ENGINEER"] },
   { label: "Warehouse", href: "/warehouse", icon: Gauge, roles: ["ADMIN", "DATA_ENGINEER"] },
-  { label: "Analytics", href: "/analytics", icon: BarChart3, roles: ["ADMIN", "ANALYST", "VIEWER"] },
+  {
+    label: "Analytics",
+    href: "/analytics",
+    icon: BarChart3,
+    roles: ["ADMIN", "ANALYST", "VIEWER"],
+  },
   { label: "Reports", href: "/analytics", icon: FileText, roles: ["ADMIN", "ANALYST", "VIEWER"] },
   { label: "Admin", href: "/admin", icon: Settings, roles: ["ADMIN"] },
 ] satisfies NavItem[];
@@ -54,9 +64,7 @@ export default function Sidebar({ role }: { role: Role }) {
       )}
     >
       <div className="mb-10 px-2">
-        <div className="text-xs uppercase tracking-[0.3em] text-(--muted)">
-          Atlas
-        </div>
+        <div className="text-xs uppercase tracking-[0.3em] text-(--muted)">Atlas</div>
         <div className="mt-2 text-lg font-semibold text-white">Analytics Core</div>
       </div>
       <nav className="flex flex-1 flex-col gap-2">

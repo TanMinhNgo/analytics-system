@@ -28,10 +28,7 @@ function decrypt(token) {
   const encrypted = raw.subarray(28);
   const decipher = crypto.createDecipheriv(ALGORITHM, getKey(), iv);
   decipher.setAuthTag(tag);
-  const decrypted = Buffer.concat([
-    decipher.update(encrypted),
-    decipher.final(),
-  ]).toString("utf8");
+  const decrypted = Buffer.concat([decipher.update(encrypted), decipher.final()]).toString("utf8");
 
   return JSON.parse(decrypted);
 }

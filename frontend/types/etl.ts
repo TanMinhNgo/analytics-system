@@ -1,9 +1,4 @@
-export type EtlStep =
-  | "SELECT"
-  | "EXTRACT"
-  | "TRANSFORM"
-  | "INTEGRATE"
-  | "LOAD";
+export type EtlStep = "SELECT" | "EXTRACT" | "TRANSFORM" | "INTEGRATE" | "LOAD";
 
 export type EtlJob = {
   id: string;

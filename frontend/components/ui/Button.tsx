@@ -5,12 +5,8 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   size?: "sm" | "md" | "lg";
 };
 
-const variantStyles: Record<
-  NonNullable<ButtonProps["variant"]>,
-  string
-> = {
-  primary:
-    "bg-[var(--accent)] text-black hover:bg-[var(--accent-strong)]",
+const variantStyles: Record<NonNullable<ButtonProps["variant"]>, string> = {
+  primary: "bg-[var(--accent)] text-black hover:bg-[var(--accent-strong)]",
   secondary: "bg-[var(--panel-strong)] text-white hover:bg-[#202435]",
   ghost: "bg-transparent text-white hover:bg-white/10",
   outline: "border border-white/20 text-white hover:border-white/40",
@@ -22,12 +18,7 @@ const sizeStyles: Record<NonNullable<ButtonProps["size"]>, string> = {
   lg: "h-12 px-5 text-base",
 };
 
-export function Button({
-  className,
-  variant = "primary",
-  size = "md",
-  ...props
-}: ButtonProps) {
+export function Button({ className, variant = "primary", size = "md", ...props }: ButtonProps) {
   return (
     <button
       className={cn(

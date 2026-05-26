@@ -45,11 +45,7 @@ if (env.NODE_ENV === "production") {
   if (fs.existsSync(staticDir)) {
     app.use(express.static(staticDir));
     app.get("*", (req, res, next) => {
-      if (
-        req.path.startsWith("/api") ||
-        req.path.startsWith("/docs") ||
-        req.path === "/health"
-      ) {
+      if (req.path.startsWith("/api") || req.path.startsWith("/docs") || req.path === "/health") {
         return next();
       }
 

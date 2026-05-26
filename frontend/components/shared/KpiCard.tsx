@@ -9,9 +9,7 @@ type KpiCardProps = {
 };
 
 export function KpiCard({ label, value, change, isPercent }: KpiCardProps) {
-  const formattedValue = isPercent
-    ? formatPercent(value)
-    : formatNumber(value);
+  const formattedValue = isPercent ? formatPercent(value) : formatNumber(value);
 
   return (
     <Card className="space-y-3">

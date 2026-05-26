@@ -14,9 +14,7 @@ export async function apiClient<T>(path: string, init?: RequestInit) {
   });
 
   if (!response.ok) {
-    const errorBody = (await response.json().catch(() => null)) as
-      | { message?: string }
-      | null;
+    const errorBody = (await response.json().catch(() => null)) as { message?: string } | null;
 
     const error: ApiError = {
       status: response.status,

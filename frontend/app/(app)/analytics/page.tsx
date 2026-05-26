@@ -55,9 +55,7 @@ export default function AnalyticsPage() {
               { dimension: "South", metric: "9.8%", trend: "Up 2%" },
             ].map((row) => (
               <TableRow key={row.dimension}>
-                <TableCell className="font-medium text-white">
-                  {row.dimension}
-                </TableCell>
+                <TableCell className="font-medium text-white">{row.dimension}</TableCell>
                 <TableCell>{row.metric}</TableCell>
                 <TableCell>{row.trend}</TableCell>
               </TableRow>

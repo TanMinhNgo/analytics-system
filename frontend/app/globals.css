@@ -23,16 +23,9 @@
 }
 
 body {
-  background: radial-gradient(
-      1200px 600px at 80% -10%,
-      rgba(255, 122, 72, 0.18),
-      transparent 60%
-    ),
-    radial-gradient(
-      1000px 700px at 10% 10%,
-      rgba(63, 81, 181, 0.22),
-      transparent 60%
-    ),
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(255, 122, 72, 0.18), transparent 60%),
+    radial-gradient(1000px 700px at 10% 10%, rgba(63, 81, 181, 0.22), transparent 60%),
     var(--background);
   color: var(--foreground);
   font-family: var(--font-space-grotesk), sans-serif;

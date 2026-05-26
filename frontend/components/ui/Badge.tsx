@@ -12,11 +12,7 @@ const toneStyles: Record<NonNullable<BadgeProps["tone"]>, string> = {
   neutral: "bg-white/10 text-white/80",
 };
 
-export function Badge({
-  className,
-  tone = "neutral",
-  ...props
-}: BadgeProps) {
+export function Badge({ className, tone = "neutral", ...props }: BadgeProps) {
   return (
     <span
       className={cn(

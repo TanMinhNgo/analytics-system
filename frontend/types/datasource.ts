@@ -1,9 +1,4 @@
-export type DataSourceType =
-  | "ERP"
-  | "POS"
-  | "LEGACY"
-  | "EXTERNAL"
-  | "OLTP";
+export type DataSourceType = "ERP" | "POS" | "LEGACY" | "EXTERNAL" | "OLTP";
 
 export type DataSource = {
   id: string;

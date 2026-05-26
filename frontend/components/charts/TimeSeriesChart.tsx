@@ -18,9 +18,7 @@ export function TimeSeriesChart({ data }: { data: TimeseriesPoint[] }) {
     <Card className="h-full">
       <div className="mb-4 flex items-center justify-between">
         <div>
-          <h3 className="text-lg font-semibold text-white">
-            Ingestion Volume
-          </h3>
+          <h3 className="text-lg font-semibold text-white">Ingestion Volume</h3>
           <p className="text-sm text-(--muted)">Hourly volume</p>
         </div>
       </div>
@@ -37,13 +35,7 @@ export function TimeSeriesChart({ data }: { data: TimeseriesPoint[] }) {
                 borderRadius: 12,
               }}
             />
-            <Line
-              type="monotone"
-              dataKey="value"
-              stroke="#ff7a48"
-              strokeWidth={3}
-              dot={false}
-            />
+            <Line type="monotone" dataKey="value" stroke="#ff7a48" strokeWidth={3} dot={false} />
           </LineChart>
         </ResponsiveContainer>
       </div>

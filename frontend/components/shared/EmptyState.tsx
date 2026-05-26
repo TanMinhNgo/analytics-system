@@ -1,12 +1,6 @@
 import { Card } from "@/components/ui/Card";
 
-export function EmptyState({
-  title,
-  description,
-}: {
-  title: string;
-  description: string;
-}) {
+export function EmptyState({ title, description }: { title: string; description: string }) {
   return (
     <Card className="text-center">
       <h3 className="text-lg font-semibold text-white">{title}</h3>

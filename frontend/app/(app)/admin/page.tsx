@@ -24,9 +24,7 @@ export default function AdminPage() {
         ].map((item) => (
           <Card key={item.label}>
             <div className="text-sm text-(--muted)">{item.label}</div>
-            <div className="mt-2 text-2xl font-semibold text-white">
-              {item.value}
-            </div>
+            <div className="mt-2 text-2xl font-semibold text-white">{item.value}</div>
           </Card>
         ))}
       </div>
@@ -43,9 +41,7 @@ export default function AdminPage() {
           <tbody>
             {users.map((user) => (
               <TableRow key={user.name}>
-                <TableCell className="font-medium text-white">
-                  {user.name}
-                </TableCell>
+                <TableCell className="font-medium text-white">{user.name}</TableCell>
                 <TableCell>{user.role}</TableCell>
                 <TableCell>
                   <StatusBadge status={user.status} />

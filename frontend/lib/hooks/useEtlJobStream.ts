@@ -20,10 +20,7 @@ export function useEtlJobStream(jobId?: string) {
         const payload = JSON.parse(event.data) as EtlLogEntry;
         setLogs((prev) => [...prev, payload]);
       } catch {
-        setLogs((prev) => [
-          ...prev,
-          { timestamp: new Date().toISOString(), message: event.data },
-        ]);
+        setLogs((prev) => [...prev, { timestamp: new Date().toISOString(), message: event.data }]);
       }
     };
 

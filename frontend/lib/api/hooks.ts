@@ -18,8 +18,7 @@ import type { Kpi, SourceBreakdown, TimeseriesPoint } from "@/types/analytics";
 export function useKpis() {
   return useQuery({
     queryKey: ["analytics", "summary"],
-    queryFn: async () =>
-      apiClient<Kpi[]>("/api/v1/analytics/summary").catch(() => kpis),
+    queryFn: async () => apiClient<Kpi[]>("/api/v1/analytics/summary").catch(() => kpis),
     initialData: kpis,
   });
 }
@@ -28,9 +27,7 @@ export function useTimeseries() {
   return useQuery({
     queryKey: ["analytics", "timeseries"],
     queryFn: async () =>
-      apiClient<TimeseriesPoint[]>("/api/v1/analytics/timeseries").catch(
-        () => timeseries
-      ),
+      apiClient<TimeseriesPoint[]>("/api/v1/analytics/timeseries").catch(() => timeseries),
     initialData: timeseries,
   });
 }
@@ -49,9 +46,7 @@ export function useSourceBreakdown() {
 export function useEtlJobs() {
   return useQuery({
     queryKey: ["etl", "jobs"],
-    queryFn: async () => apiClient<EtlJob[]>("/api/v1/etl/jobs").catch(
-      () => etlJobs
-    ),
+    queryFn: async () => apiClient<EtlJob[]>("/api/v1/etl/jobs").catch(() => etlJobs),
     initialData: etlJobs,
   });
 }
@@ -59,8 +54,7 @@ export function useEtlJobs() {
 export function useDataSources() {
   return useQuery({
     queryKey: ["datasources"],
-    queryFn: async () =>
-      apiClient<DataSource[]>("/api/v1/datasources").catch(() => dataSources),
+    queryFn: async () => apiClient<DataSource[]>("/api/v1/datasources").catch(() => dataSources),
     initialData: dataSources,
   });
 }
@@ -69,9 +63,7 @@ export function useWarehouseTables() {
   return useQuery({
     queryKey: ["warehouse", "tables"],
     queryFn: async () =>
-      apiClient<WarehouseTable[]>("/api/v1/warehouse/tables").catch(
-        () => warehouseTables
-      ),
+      apiClient<WarehouseTable[]>("/api/v1/warehouse/tables").catch(() => warehouseTables),
     initialData: warehouseTables,
   });
 }
@@ -79,8 +71,7 @@ export function useWarehouseTables() {
 export function useDataMarts() {
   return useQuery({
     queryKey: ["warehouse", "marts"],
-    queryFn: async () =>
-      apiClient<DataMart[]>("/api/v1/datamarts").catch(() => dataMarts),
+    queryFn: async () => apiClient<DataMart[]>("/api/v1/datamarts").catch(() => dataMarts),
     initialData: dataMarts,
   });
 }
