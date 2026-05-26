@@ -1,4 +1,4 @@
-const { Queue, Worker, QueueScheduler } = require("bullmq");
+const { Queue, Worker } = require("bullmq");
 
 const { env } = require("../config/env");
 const { logger } = require("../config/logger");
@@ -6,17 +6,15 @@ const { etlEvents } = require("./etl-events");
 
 let queue;
 let worker;
-let scheduler;
 
 const steps = ["SELECT", "EXTRACT", "TRANSFORM", "INTEGRATE", "LOAD"];
 
 async function initQueues() {
+
   if (queue) {
     return queue;
   }
-
   queue = new Queue("etl", { connection: { url: env.REDIS_URL } });
-  scheduler = new QueueScheduler("etl", { connection: { url: env.REDIS_URL } });
 
   worker = new Worker(
     "etl",
@@ -56,7 +54,7 @@ async function initQueues() {
     logger.error({ jobId: job?.id, err }, "ETL job failed");
   });
 
-  await scheduler.waitUntilReady();
+  // No scheduler needed in BullMQ v5+
   await worker.waitUntilReady();
 
   return queue;
