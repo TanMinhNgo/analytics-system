@@ -23,7 +23,21 @@ const { authRouter } = require("./routes/auth");
 
 const app = express();
 
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        imgSrc: ["'self'", "data:", "blob:"],
+        fontSrc: ["'self'", "data:"],
+        connectSrc: ["'self'"],
+        frameSrc: ["'self'"],
+      },
+    },
+  })
+);
 app.use(
   cors({
     origin: env.CORS_ORIGIN,
@@ -44,7 +58,7 @@ if (env.NODE_ENV === "production") {
   const staticDir = path.join(__dirname, "../../frontend/out");
   if (fs.existsSync(staticDir)) {
     app.use(express.static(staticDir));
-    app.get("*", (req, res, next) => {
+    app.get("/", (req, res, next) => {
       if (req.path.startsWith("/api") || req.path.startsWith("/docs") || req.path === "/health") {
         return next();
       }
