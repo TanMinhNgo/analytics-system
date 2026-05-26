@@ -58,13 +58,13 @@ registerSwagger(app);
 let staticDir = null;
 if (env.NODE_ENV === "production") {
   const possibleStaticDirs = [
-    path.join(__dirname, "../public"),        // Root Dockerfile: ./public
+    path.join(__dirname, "../public"), // Root Dockerfile: ./public
     path.join(__dirname, "../../frontend/out"), // Monorepo structure
-    path.join(__dirname, "../..", "public"),    // Alternative root
+    path.join(__dirname, "../..", "public"), // Alternative root
   ];
-  
-  staticDir = possibleStaticDirs.find(dir => fs.existsSync(dir));
-  
+
+  staticDir = possibleStaticDirs.find((dir) => fs.existsSync(dir));
+
   if (staticDir) {
     logger.info(`Serving static files from: ${staticDir}`);
     app.use(express.static(staticDir));
