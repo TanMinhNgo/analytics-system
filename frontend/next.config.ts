@@ -1,16 +1,17 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "export",
-  // Disable Image Optimization for static export
-  images: {
-    unoptimized: true,
-  },
-  // Ensure proper trailing slashes
-  trailingSlash: true,
-  // Disable server-side features for static export
   experimental: {
     optimizePackageImports: ["lucide-react", "recharts"],
+  },
+  async rewrites() {
+    const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+    return [
+      {
+        source: "/api/v1/:path*",
+        destination: `${backendUrl}/api/v1/:path*`,
+      },
+    ];
   },
 };
 
