@@ -41,7 +41,9 @@ export default function LoginPage() {
     <main className="flex min-h-screen items-center justify-center px-4">
       <Card className="w-full max-w-md space-y-6">
         <div>
-          <p className="text-xs uppercase tracking-[0.24em] text-(--muted)">Analytics Access</p>
+          <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">
+            Analytics Access
+          </p>
           <h1 className="mt-2 text-2xl font-semibold">Sign in</h1>
         </div>
         <form onSubmit={onSubmit} className="space-y-4">

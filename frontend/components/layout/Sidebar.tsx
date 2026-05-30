@@ -74,6 +74,45 @@ export default function Sidebar({ role }: { role: Role }) {
     { scope: sidebarRef }
   );
 
+  useGSAP(
+    () => {
+      if (!sidebarRef.current) return;
+
+      const labels = sidebarRef.current.querySelectorAll("[data-sidebar-label]");
+      const navItemsEls = sidebarRef.current.querySelectorAll("[data-sidebar-item]");
+      const badge = sidebarRef.current.querySelector("[data-sidebar-badge]");
+
+      gsap.to(labels, {
+        autoAlpha: sidebarOpen ? 1 : 0,
+        x: sidebarOpen ? 0 : -6,
+        duration: 0.2,
+        ease: "power2.out",
+      });
+
+      gsap.fromTo(
+        navItemsEls,
+        { x: -8, autoAlpha: 0.85 },
+        {
+          x: 0,
+          autoAlpha: 1,
+          duration: 0.28,
+          stagger: 0.03,
+          ease: "power2.out",
+          overwrite: "auto",
+        }
+      );
+
+      if (badge) {
+        gsap.fromTo(
+          badge,
+          { y: 6, autoAlpha: 0.85 },
+          { y: 0, autoAlpha: 1, duration: 0.22, ease: "power2.out", overwrite: "auto" }
+        );
+      }
+    },
+    { scope: sidebarRef, dependencies: [sidebarOpen, pathname] }
+  );
+
   useEffect(() => {
     const syncForViewport = () => {
       setSidebarOpen(window.innerWidth >= 768);
@@ -107,10 +146,11 @@ export default function Sidebar({ role }: { role: Role }) {
         )}
       >
         <div className="mb-6 px-2">
-          <div className="text-xs uppercase tracking-[0.3em] text-white/60">
+          <div data-sidebar-label className="text-xs uppercase tracking-[0.3em] text-white/60">
             {sidebarOpen ? "Atlas" : "A"}
           </div>
           <div
+            data-sidebar-label
             className={cn(
               "mt-2 text-lg font-semibold text-white transition-opacity",
               sidebarOpen ? "opacity-100" : "opacity-0 md:hidden"
@@ -127,6 +167,7 @@ export default function Sidebar({ role }: { role: Role }) {
               const Icon = item.icon;
               return (
                 <Link
+                  data-sidebar-item
                   key={item.label}
                   href={item.href}
                   onClick={closeOnMobileOnly}
@@ -141,7 +182,10 @@ export default function Sidebar({ role }: { role: Role }) {
               );
             })}
         </nav>
-        <div className="mt-4 rounded-2xl border border-white/15 bg-white/5 p-4 text-xs text-white/75">
+        <div
+          data-sidebar-badge
+          className="mt-4 rounded-2xl border border-white/15 bg-white/5 p-4 text-xs text-white/75"
+        >
           {sidebarOpen ? (
             "Upgrade data refresh to 15s cadence."
           ) : (

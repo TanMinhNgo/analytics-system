@@ -19,7 +19,7 @@ export function TimeSeriesChart({ data }: { data: TimeseriesPoint[] }) {
       <div className="mb-4 flex items-center justify-between">
         <div>
           <h3 className="text-lg font-semibold text-white">Ingestion Volume</h3>
-          <p className="text-sm text-(--muted)">Hourly volume</p>
+          <p className="text-sm text-muted-foreground">Hourly volume</p>
         </div>
       </div>
       <div className="h-64">

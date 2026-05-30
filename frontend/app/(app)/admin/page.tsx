@@ -23,7 +23,7 @@ export default function AdminPage() {
           { label: "Queue depth", value: "14 jobs" },
         ].map((item) => (
           <Card key={item.label}>
-            <div className="text-sm text-(--muted)">{item.label}</div>
+            <div className="text-sm text-muted-foreground">{item.label}</div>
             <div className="mt-2 text-2xl font-semibold text-white">{item.value}</div>
           </Card>
         ))}
