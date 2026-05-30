@@ -11,8 +11,8 @@ const router = express.Router();
 
 const datasourceSchema = z.object({
   name: z.string().min(2),
-  type: z.enum(["ERP", "POS", "LEGACY", "EXTERNAL", "OLTP"]),
-  config: z.record(z.any()),
+  type: z.string().min(2),
+  config: z.record(z.any()).default({}),
   secret: z.any().optional(),
   status: z.string().optional(),
   enabled: z.boolean().optional(),
@@ -41,6 +41,22 @@ router.patch("/:id", async (req, res) => {
   }
 
   const updated = await updateSource(req.params.id, parsed.data);
+  if (!updated) {
+    return res.status(404).json({ message: "Data source not found" });
+  }
+  return res.json(updated);
+});
+
+router.put("/:id", async (req, res) => {
+  const parsed = datasourceSchema.safeParse(req.body);
+  if (!parsed.success) {
+    return res.status(400).json({ message: "Invalid payload" });
+  }
+
+  const updated = await updateSource(req.params.id, parsed.data);
+  if (!updated) {
+    return res.status(404).json({ message: "Data source not found" });
+  }
   return res.json(updated);
 });
 
