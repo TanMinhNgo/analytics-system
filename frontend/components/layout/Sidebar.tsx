@@ -11,6 +11,7 @@ import {
   Gauge,
   LayoutGrid,
   Settings,
+  Sparkles,
   type LucideIcon,
 } from "lucide-react";
 import { useGSAP } from "@gsap/react";
@@ -82,6 +83,12 @@ export default function Sidebar({ role }: { role: Role }) {
     return () => window.removeEventListener("resize", syncForViewport);
   }, [setSidebarOpen]);
 
+  const closeOnMobileOnly = () => {
+    if (window.innerWidth < 768) {
+      setSidebarOpen(false);
+    }
+  };
+
   return (
     <>
       <div
@@ -100,8 +107,17 @@ export default function Sidebar({ role }: { role: Role }) {
         )}
       >
         <div className="mb-6 px-2">
-          <div className="text-xs uppercase tracking-[0.3em] text-white/60">Atlas</div>
-          <div className="mt-2 text-lg font-semibold text-white">Analytics Core</div>
+          <div className="text-xs uppercase tracking-[0.3em] text-white/60">
+            {sidebarOpen ? "Atlas" : "A"}
+          </div>
+          <div
+            className={cn(
+              "mt-2 text-lg font-semibold text-white transition-opacity",
+              sidebarOpen ? "opacity-100" : "opacity-0 md:hidden"
+            )}
+          >
+            Analytics Core
+          </div>
         </div>
         <nav className="flex flex-1 flex-col gap-2 overflow-y-auto pr-1">
           {navItems
@@ -113,7 +129,7 @@ export default function Sidebar({ role }: { role: Role }) {
                 <Link
                   key={item.label}
                   href={item.href}
-                  onClick={() => setSidebarOpen(false)}
+                  onClick={closeOnMobileOnly}
                   className={cn(
                     "flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10",
                     isActive && "bg-white/15 text-white"
@@ -126,7 +142,13 @@ export default function Sidebar({ role }: { role: Role }) {
             })}
         </nav>
         <div className="mt-4 rounded-2xl border border-white/15 bg-white/5 p-4 text-xs text-white/75">
-          Upgrade data refresh to 15s cadence.
+          {sidebarOpen ? (
+            "Upgrade data refresh to 15s cadence."
+          ) : (
+            <div className="flex justify-center">
+              <Sparkles size={16} aria-label="refresh upgrade hint" />
+            </div>
+          )}
         </div>
       </aside>
     </>
