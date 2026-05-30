@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useRef } from "react";
 import {
   Activity,
   BarChart3,
@@ -12,6 +13,8 @@ import {
   Settings,
   type LucideIcon,
 } from "lucide-react";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "@/lib/animations/gsap";
 
 import { useUiStore } from "@/lib/store/ui";
 import { cn } from "@/lib/utils/cn";
@@ -55,9 +58,23 @@ function canAccess(item: NavItem, role: Role) {
 export default function Sidebar({ role }: { role: Role }) {
   const pathname = usePathname();
   const sidebarOpen = useUiStore((state) => state.sidebarOpen);
+  const sidebarRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      if (!sidebarRef.current) return;
+      gsap.fromTo(
+        sidebarRef.current,
+        { x: -20, autoAlpha: 0 },
+        { x: 0, autoAlpha: 1, duration: 0.45, ease: "power2.out", clearProps: "all" }
+      );
+    },
+    { scope: sidebarRef }
+  );
 
   return (
     <aside
+      ref={sidebarRef}
       className={cn(
         "flex h-screen flex-col border-r border-white/10 bg-black/40 px-4 py-8 backdrop-blur",
         sidebarOpen ? "w-64" : "w-20"
