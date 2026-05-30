@@ -18,7 +18,7 @@ export function TimeSeriesChart({ data }: { data: TimeseriesPoint[] }) {
     <Card className="h-full">
       <div className="mb-4 flex items-center justify-between">
         <div>
-          <h3 className="text-lg font-semibold text-white">Ingestion Volume</h3>
+          <h3 className="text-lg font-semibold text-foreground">Ingestion Volume</h3>
           <p className="text-sm text-muted-foreground">Hourly volume</p>
         </div>
       </div>

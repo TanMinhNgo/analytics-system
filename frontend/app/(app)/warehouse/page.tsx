@@ -52,7 +52,7 @@ export default function WarehousePage() {
             <tbody>
               {tables.map((table) => (
                 <TableRow key={table.name}>
-                  <TableCell className="font-medium text-white">{table.name}</TableCell>
+                  <TableCell className="font-medium text-foreground">{table.name}</TableCell>
                   <TableCell>{table.columns.length}</TableCell>
                   <TableCell>{formatNumber(table.rowCount)}</TableCell>
                   <TableCell>{formatDateTime(table.lastUpdated)}</TableCell>
@@ -65,10 +65,12 @@ export default function WarehousePage() {
           <SectionHeader title="Data Marts" subtitle="Available filtered marts" />
           <div className="mt-4 space-y-4">
             {martsQuery.data.map((mart) => (
-              <div key={mart.name} className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <div className="text-sm font-semibold text-white">{mart.name}</div>
+              <div key={mart.name} className="rounded-2xl border border-border bg-card/60 p-4">
+                <div className="text-sm font-semibold text-foreground">{mart.name}</div>
                 <div className="mt-2 text-xs text-muted-foreground">{mart.description}</div>
-                <div className="mt-3 text-xs text-white/70">{formatNumber(mart.rowCount)} rows</div>
+                <div className="mt-3 text-xs text-muted-foreground">
+                  {formatNumber(mart.rowCount)} rows
+                </div>
               </div>
             ))}
           </div>

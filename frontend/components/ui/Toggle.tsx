@@ -9,14 +9,14 @@ export function Toggle({ checked, className, ...props }: ToggleProps) {
     <button
       className={cn(
         "relative h-7 w-12 rounded-full transition",
-        checked ? "bg-(--accent)" : "bg-white/10",
+        checked ? "bg-primary" : "bg-muted",
         className
       )}
       {...props}
     >
       <span
         className={cn(
-          "absolute left-1 top-1 h-5 w-5 rounded-full bg-white transition",
+          "absolute left-1 top-1 h-5 w-5 rounded-full bg-background shadow-sm transition",
           checked && "translate-x-5"
         )}
       />

@@ -9,7 +9,7 @@ const toneStyles: Record<NonNullable<BadgeProps["tone"]>, string> = {
   warning: "bg-amber-500/20 text-amber-200",
   error: "bg-rose-500/20 text-rose-200",
   info: "bg-sky-500/20 text-sky-200",
-  neutral: "bg-white/10 text-white/80",
+  neutral: "bg-muted text-foreground/80",
 };
 
 export function Badge({ className, tone = "neutral", ...props }: BadgeProps) {

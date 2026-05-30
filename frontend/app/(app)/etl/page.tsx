@@ -66,11 +66,11 @@ export default function EtlPage() {
           { label: "Failed", value: jobStats.failed, icon: XCircle },
         ].map((item) => (
           <Card key={item.label} className="space-y-3">
-            <div className="flex items-center justify-between text-sm text-white/70">
+            <div className="flex items-center justify-between text-sm text-muted-foreground">
               {item.label}
               <item.icon size={16} />
             </div>
-            <div className="text-3xl font-semibold text-white">{item.value}</div>
+            <div className="text-3xl font-semibold text-foreground">{item.value}</div>
           </Card>
         ))}
       </div>
@@ -80,10 +80,10 @@ export default function EtlPage() {
           {steps.map((step, index) => (
             <div
               key={step}
-              className="rounded-2xl border border-white/10 bg-white/5 px-4 py-5 text-sm"
+              className="rounded-2xl border border-border bg-card/60 px-4 py-5 text-sm"
             >
-              <div className="text-white/70">Step {index + 1}</div>
-              <div className="mt-2 text-lg font-semibold text-white">{step}</div>
+              <div className="text-muted-foreground">Step {index + 1}</div>
+              <div className="mt-2 text-lg font-semibold text-foreground">{step}</div>
               <div className="mt-2 text-xs text-emerald-200">Completed</div>
             </div>
           ))}
@@ -123,10 +123,10 @@ export default function EtlPage() {
             {jobs.map((job) => (
               <TableRow
                 key={job.id}
-                className={activeJobId === job.id ? "bg-white/5" : ""}
+                className={activeJobId === job.id ? "bg-muted/50" : ""}
                 onClick={() => setSelectedJobId(job.id)}
               >
-                <TableCell className="font-medium text-white">{job.name}</TableCell>
+                <TableCell className="font-medium text-foreground">{job.name}</TableCell>
                 <TableCell>
                   <StatusBadge status={job.status} />
                 </TableCell>
@@ -149,10 +149,10 @@ export default function EtlPage() {
                 : "Showing latest available logs"
           }
         />
-        <div className="mt-4 space-y-3 text-sm text-white/80">
+        <div className="mt-4 space-y-3 text-sm text-foreground/85">
           {displayLogs.map((log, index) => (
             <div key={`${log.timestamp}-${index}`} className="flex gap-3">
-              <span className="text-white/50">{log.timestamp}</span>
+              <span className="text-muted-foreground">{log.timestamp}</span>
               <span>{log.message}</span>
             </div>
           ))}

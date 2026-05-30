@@ -11,7 +11,7 @@ export function Breadcrumbs() {
       <span>Home</span>
       {segments.map((segment, index) => (
         <span key={`${segment}-${index}`} className="flex items-center gap-2">
-          <span className="text-white/40">/</span>
+          <span className="text-muted-foreground/70">/</span>
           <span className="capitalize">{segment.replace(/-/g, " ")}</span>
         </span>
       ))}

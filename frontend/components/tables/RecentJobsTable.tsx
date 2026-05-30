@@ -18,7 +18,7 @@ export function RecentJobsTable({ jobs }: { jobs: EtlJob[] }) {
       <tbody>
         {jobs.map((job) => (
           <TableRow key={job.id}>
-            <TableCell className="font-medium text-white">{job.name}</TableCell>
+            <TableCell className="font-medium text-foreground">{job.name}</TableCell>
             <TableCell>
               <StatusBadge status={job.status} />
             </TableCell>

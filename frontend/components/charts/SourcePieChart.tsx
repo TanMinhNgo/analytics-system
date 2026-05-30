@@ -11,7 +11,7 @@ export function SourcePieChart({ data }: { data: SourceBreakdown[] }) {
   return (
     <Card className="h-full">
       <div className="mb-4">
-        <h3 className="text-lg font-semibold text-white">Records by Source</h3>
+        <h3 className="text-lg font-semibold text-foreground">Records by Source</h3>
         <p className="text-sm text-muted-foreground">Current mix</p>
       </div>
       <div className="h-64">

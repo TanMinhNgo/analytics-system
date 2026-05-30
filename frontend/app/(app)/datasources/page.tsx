@@ -239,7 +239,7 @@ export default function DataSourcesPage() {
           <tbody>
             {rows.map((source) => (
               <TableRow key={source.id}>
-                <TableCell className="font-medium text-white">{source.name}</TableCell>
+                <TableCell className="font-medium text-foreground">{source.name}</TableCell>
                 <TableCell>{source.type}</TableCell>
                 <TableCell>
                   <StatusBadge status={source.status} />

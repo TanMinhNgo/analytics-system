@@ -120,7 +120,7 @@ export default function ReportsPage() {
             <tbody>
               {timeseriesQuery.data.map((row) => (
                 <TableRow key={row.label}>
-                  <TableCell className="font-medium text-white">{row.label}</TableCell>
+                  <TableCell className="font-medium text-foreground">{row.label}</TableCell>
                   <TableCell>{formatNumber(row.value)}</TableCell>
                 </TableRow>
               ))}

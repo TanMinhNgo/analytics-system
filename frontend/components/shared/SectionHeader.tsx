@@ -11,7 +11,7 @@ export function SectionHeader({
 }) {
   return (
     <div data-animate className={cn("space-y-2", className)}>
-      <h2 className="text-2xl font-semibold text-white">{title}</h2>
+      <h2 className="text-2xl font-semibold text-foreground">{title}</h2>
       {subtitle ? <p className="text-sm text-muted-foreground">{subtitle}</p> : null}
     </div>
   );

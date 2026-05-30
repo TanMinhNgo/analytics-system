@@ -8,14 +8,19 @@ import { cn } from "@/lib/utils/cn";
 
 export function Table({ className, ...props }: React.TableHTMLAttributes<HTMLTableElement>) {
   return (
-    <div data-animate className="w-full overflow-hidden rounded-2xl border border-white/10">
-      <table className={cn("w-full text-left text-sm text-white", className)} {...props} />
+    <div data-animate className="w-full overflow-hidden rounded-2xl border border-border">
+      <table className={cn("w-full text-left text-sm text-foreground", className)} {...props} />
     </div>
   );
 }
 
 export function TableHead({ className, ...props }: React.HTMLAttributes<HTMLTableSectionElement>) {
-  return <thead className={cn("bg-white/5 text-xs uppercase", className)} {...props} />;
+  return (
+    <thead
+      className={cn("bg-muted/60 text-xs uppercase text-muted-foreground", className)}
+      {...props}
+    />
+  );
 }
 
 export function TableRow({ className, ...props }: React.HTMLAttributes<HTMLTableRowElement>) {
@@ -42,7 +47,7 @@ export function TableRow({ className, ...props }: React.HTMLAttributes<HTMLTable
     { scope: ref }
   );
 
-  return <tr ref={ref} className={cn("border-b border-white/10", className)} {...props} />;
+  return <tr ref={ref} className={cn("border-b border-border/70", className)} {...props} />;
 }
 
 export function TableCell({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) {
