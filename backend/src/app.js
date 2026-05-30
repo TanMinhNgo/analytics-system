@@ -2,8 +2,7 @@ const cors = require("cors");
 const express = require("express");
 const helmet = require("helmet");
 const pinoHttp = require("pino-http");
-const fs = require("fs");
-const path = require("path");
+const { createProxyMiddleware } = require("http-proxy-middleware");
 
 const { env } = require("./config/env");
 const { logger } = require("./config/logger");
@@ -54,25 +53,6 @@ app.get("/health", (req, res) => {
 
 registerSwagger(app);
 
-// Serve static files in production (without fallback yet)
-let staticDir = null;
-if (env.NODE_ENV === "production") {
-  const possibleStaticDirs = [
-    path.join(__dirname, "../public"), // Root Dockerfile: ./public
-    path.join(__dirname, "../../frontend/out"), // Monorepo structure
-    path.join(__dirname, "../..", "public"), // Alternative root
-  ];
-
-  staticDir = possibleStaticDirs.find((dir) => fs.existsSync(dir));
-
-  if (staticDir) {
-    logger.info(`Serving static files from: ${staticDir}`);
-    app.use(express.static(staticDir));
-  } else {
-    logger.warn("No static directory found for frontend");
-  }
-}
-
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1", authOptional);
 app.use(rateLimiter());
@@ -103,11 +83,19 @@ app.use(
   datamartsRouter
 );
 
-// SPA fallback - must be after all API routes
-if (staticDir) {
-  app.use((req, res) => {
-    res.sendFile(path.join(staticDir, "index.html"));
-  });
+// Proxy non-API requests to internal Next.js server for single-service deployment.
+if (env.NODE_ENV === "production") {
+  const frontendInternalUrl = process.env.FRONTEND_INTERNAL_URL ?? "http://127.0.0.1:3000";
+  logger.info(`Proxying frontend traffic to: ${frontendInternalUrl}`);
+  app.use(
+    "/",
+    createProxyMiddleware({
+      target: frontendInternalUrl,
+      changeOrigin: true,
+      ws: true,
+      logLevel: "warn",
+    })
+  );
 }
 
 app.use((err, req, res, next) => {
