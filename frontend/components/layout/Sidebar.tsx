@@ -81,11 +81,21 @@ export default function Sidebar({ role }: { role: Role }) {
       const labels = sidebarRef.current.querySelectorAll("[data-sidebar-label]");
       const navItemsEls = sidebarRef.current.querySelectorAll("[data-sidebar-item]");
       const badge = sidebarRef.current.querySelector("[data-sidebar-badge]");
+      const isDesktop = window.innerWidth >= 768;
+
+      if (isDesktop) {
+        gsap.to(sidebarRef.current, {
+          width: sidebarOpen ? 256 : 80,
+          duration: 0.28,
+          ease: "power2.inOut",
+          overwrite: "auto",
+        });
+      }
 
       gsap.to(labels, {
         autoAlpha: sidebarOpen ? 1 : 0,
         x: sidebarOpen ? 0 : -6,
-        duration: 0.2,
+        duration: 0.22,
         ease: "power2.out",
       });
 
@@ -140,9 +150,9 @@ export default function Sidebar({ role }: { role: Role }) {
       <aside
         ref={sidebarRef}
         className={cn(
-          "fixed inset-y-0 left-0 z-40 flex w-72 flex-col border-r border-white/10 bg-black/65 px-4 py-6 backdrop-blur transition-transform duration-300 md:sticky md:top-0 md:z-10 md:h-screen md:bg-black/40",
+          "fixed inset-y-0 left-0 z-40 flex w-72 flex-col border-r border-white/10 bg-black/65 px-4 py-6 backdrop-blur md:sticky md:top-0 md:z-10 md:h-screen md:bg-black/40",
           sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
-          sidebarOpen ? "md:w-64" : "md:w-20"
+          "md:w-64"
         )}
       >
         <div className="mb-6 px-2">
