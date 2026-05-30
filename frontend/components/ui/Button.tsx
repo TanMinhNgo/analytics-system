@@ -31,9 +31,11 @@ export function Button({ className, variant = "primary", size = "md", ...props }
     () => {
       if (!ref.current) return;
 
-      const onEnter = () => gsap.to(ref.current, { scale: 1.02, duration: 0.16, ease: "power2.out" });
+      const onEnter = () =>
+        gsap.to(ref.current, { scale: 1.02, duration: 0.16, ease: "power2.out" });
       const onLeave = () => gsap.to(ref.current, { scale: 1, duration: 0.2, ease: "power2.out" });
-      const onDown = () => gsap.to(ref.current, { scale: 0.98, duration: 0.08, ease: "power2.out" });
+      const onDown = () =>
+        gsap.to(ref.current, { scale: 0.98, duration: 0.08, ease: "power2.out" });
       const onUp = () => gsap.to(ref.current, { scale: 1.02, duration: 0.12, ease: "power2.out" });
 
       ref.current.addEventListener("pointerenter", onEnter);

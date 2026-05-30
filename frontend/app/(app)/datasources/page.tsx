@@ -221,7 +221,10 @@ export default function DataSourcesPage() {
           </Select>
         </div>
         {rows.length === 0 ? (
-          <EmptyState title="No data sources found" description="Try a different filter or search term." />
+          <EmptyState
+            title="No data sources found"
+            description="Try a different filter or search term."
+          />
         ) : null}
         <Table>
           <TableHead>

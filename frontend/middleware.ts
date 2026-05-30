@@ -4,7 +4,14 @@ import type { NextRequest } from "next/server";
 import { Roles, type Role } from "@/lib/auth/roles";
 import { roleCanAccessPath } from "@/lib/auth/route-guards";
 
-const protectedPrefixes = ["/dashboard", "/datasources", "/etl", "/warehouse", "/analytics", "/admin"];
+const protectedPrefixes = [
+  "/dashboard",
+  "/datasources",
+  "/etl",
+  "/warehouse",
+  "/analytics",
+  "/admin",
+];
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
@@ -30,5 +37,12 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/datasources/:path*", "/etl/:path*", "/warehouse/:path*", "/analytics/:path*", "/admin/:path*"],
+  matcher: [
+    "/dashboard/:path*",
+    "/datasources/:path*",
+    "/etl/:path*",
+    "/warehouse/:path*",
+    "/analytics/:path*",
+    "/admin/:path*",
+  ],
 };

@@ -104,7 +104,10 @@ export default function EtlPage() {
           ))}
         </div>
         {jobs.length === 0 ? (
-          <EmptyState title="No ETL jobs in this tab" description="Try a different status filter." />
+          <EmptyState
+            title="No ETL jobs in this tab"
+            description="Try a different status filter."
+          />
         ) : null}
         <Table>
           <TableHead>

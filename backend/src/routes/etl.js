@@ -119,7 +119,9 @@ router.get("/jobs/:id", async (req, res) => {
       startedAt: run.startedAt,
       finishedAt: run.finishedAt,
       logs: logs.map((item) => ({
-        timestamp: item.createdAt ? new Date(item.createdAt).toISOString() : new Date().toISOString(),
+        timestamp: item.createdAt
+          ? new Date(item.createdAt).toISOString()
+          : new Date().toISOString(),
         message: item.message,
       })),
     },

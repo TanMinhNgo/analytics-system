@@ -47,10 +47,7 @@ export default function LoginPage() {
         <form onSubmit={onSubmit} className="space-y-4">
           <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Full name" />
           <Input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-          <Select
-            value={role}
-            onChange={(e) => setRole(e.target.value as Role)}
-          >
+          <Select value={role} onChange={(e) => setRole(e.target.value as Role)}>
             {Roles.map((item) => (
               <option key={item} value={item}>
                 {roleLabels[item]}

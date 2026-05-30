@@ -26,7 +26,9 @@ router.get("/query", async (req, res) => {
     return res.status(400).json({ message: "Invalid table name" });
   }
 
-  const rows = await db.execute(sql.raw(`select * from "${table}" limit ${pageSize} offset ${offset}`));
+  const rows = await db.execute(
+    sql.raw(`select * from "${table}" limit ${pageSize} offset ${offset}`)
+  );
   const totalResult = await db.execute(sql.raw(`select count(*)::int as total from "${table}"`));
   const total = Number(totalResult.rows?.[0]?.total ?? 0);
 

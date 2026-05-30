@@ -18,11 +18,13 @@ function makeApp(path, router) {
 describe("datasources routes", () => {
   it("returns 404 when updating an unknown datasource", async () => {
     const app = makeApp("/api/v1/datasources", datasourcesRouter);
-    const response = await request(app).put("/api/v1/datasources/00000000-0000-0000-0000-000000000000").send({
-      name: "Unknown Source",
-      type: "ERP",
-      config: {},
-    });
+    const response = await request(app)
+      .put("/api/v1/datasources/00000000-0000-0000-0000-000000000000")
+      .send({
+        name: "Unknown Source",
+        type: "ERP",
+        config: {},
+      });
 
     expect([404, 500]).toContain(response.status);
     if (response.status === 404) {

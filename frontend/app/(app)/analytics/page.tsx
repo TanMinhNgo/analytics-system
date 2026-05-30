@@ -2,7 +2,15 @@
 
 import { useMemo, useState } from "react";
 import { Download } from "lucide-react";
-import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import {
+  CartesianGrid,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 import { EmptyState } from "@/components/shared/EmptyState";
 import { SectionHeader } from "@/components/shared/SectionHeader";
@@ -39,7 +47,10 @@ export default function AnalyticsPage() {
 
   return (
     <div className="space-y-8">
-      <SectionHeader title="Analytics & Reports" subtitle="Build custom reports and visualize metrics." />
+      <SectionHeader
+        title="Analytics & Reports"
+        subtitle="Build custom reports and visualize metrics."
+      />
       <Card className="space-y-6">
         <SectionHeader title="Report Builder" />
         <div className="grid gap-4 md:grid-cols-3">
@@ -91,7 +102,13 @@ export default function AnalyticsPage() {
                     borderRadius: 12,
                   }}
                 />
-                <Line type="monotone" dataKey="value" stroke="#ff7a48" strokeWidth={3} dot={false} />
+                <Line
+                  type="monotone"
+                  dataKey="value"
+                  stroke="#ff7a48"
+                  strokeWidth={3}
+                  dot={false}
+                />
               </LineChart>
             </ResponsiveContainer>
           </div>
