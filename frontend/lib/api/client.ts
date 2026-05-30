@@ -3,12 +3,19 @@ type ApiError = {
   message: string;
 };
 
+function getAccessToken() {
+  if (typeof window === "undefined") return null;
+  return window.localStorage.getItem("ads_access_token");
+}
+
 export async function apiClient<T>(path: string, init?: RequestInit) {
   const baseUrl = process.env.NEXT_PUBLIC_API_URL ?? "";
+  const token = getAccessToken();
   const response = await fetch(`${baseUrl}${path}`, {
     ...init,
     headers: {
       "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...(init?.headers ?? {}),
     },
   });

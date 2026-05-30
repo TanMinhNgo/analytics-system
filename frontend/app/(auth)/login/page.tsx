@@ -16,11 +16,33 @@ export default function LoginPage() {
   const [name, setName] = useState("Admin User");
   const [role, setRole] = useState<Role>("ADMIN");
   const [loading, setLoading] = useState(false);
+  const defaultPasswordByRole: Record<Role, string> = {
+    ADMIN: "admin123",
+    DATA_ENGINEER: "engineer123",
+    ANALYST: "analyst123",
+    VIEWER: "viewer123",
+  };
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
     try {
+      const loginResponse = await fetch("/api/v1/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          password: defaultPasswordByRole[role],
+        }),
+      });
+
+      if (!loginResponse.ok) {
+        throw new Error("Invalid credentials");
+      }
+
+      const loginPayload = (await loginResponse.json()) as { accessToken: string };
+      window.localStorage.setItem("ads_access_token", loginPayload.accessToken);
+
       const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toUTCString();
       document.cookie = `ads_role=${role}; expires=${expires}; path=/; SameSite=Lax`;
       document.cookie = `ads_name=${encodeURIComponent(name)}; expires=${expires}; path=/; SameSite=Lax`;
@@ -30,8 +52,8 @@ export default function LoginPage() {
       router.push(defaultRoute);
       router.refresh();
       toast.success("Signed in successfully.");
-    } catch {
-      toast.error("Failed to sign in.");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Failed to sign in.");
     } finally {
       setLoading(false);
     }

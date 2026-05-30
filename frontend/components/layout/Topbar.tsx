@@ -35,6 +35,7 @@ export default function Topbar({ user }: TopbarProps) {
   );
 
   async function signOut() {
+    window.localStorage.removeItem("ads_access_token");
     document.cookie = "ads_role=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
     document.cookie = "ads_name=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
     document.cookie = "ads_email=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
