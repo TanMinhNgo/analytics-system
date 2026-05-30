@@ -150,19 +150,22 @@ export default function Sidebar({ role }: { role: Role }) {
       <aside
         ref={sidebarRef}
         className={cn(
-          "fixed inset-y-0 left-0 z-40 flex w-72 flex-col border-r border-white/10 bg-black/65 px-4 py-6 backdrop-blur md:sticky md:top-0 md:z-10 md:h-screen md:bg-black/40",
+          "fixed inset-y-0 left-0 z-40 flex w-72 flex-col border-r border-sidebar-border bg-sidebar/90 px-4 py-6 text-sidebar-foreground backdrop-blur md:sticky md:top-0 md:z-10 md:h-screen",
           sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
           "md:w-64"
         )}
       >
         <div className="mb-6 px-2">
-          <div data-sidebar-label className="text-xs uppercase tracking-[0.3em] text-white/60">
+          <div
+            data-sidebar-label
+            className="text-xs uppercase tracking-[0.3em] text-sidebar-foreground/65"
+          >
             {sidebarOpen ? "Atlas" : "A"}
           </div>
           <div
             data-sidebar-label
             className={cn(
-              "mt-2 text-lg font-semibold text-white transition-opacity",
+              "mt-2 text-lg font-semibold text-sidebar-foreground transition-opacity",
               sidebarOpen ? "opacity-100" : "opacity-0 md:hidden"
             )}
           >
@@ -182,8 +185,8 @@ export default function Sidebar({ role }: { role: Role }) {
                   href={item.href}
                   onClick={closeOnMobileOnly}
                   className={cn(
-                    "flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10",
-                    isActive && "bg-white/15 text-white"
+                    "flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-sidebar-foreground/85 transition hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                    isActive && "bg-sidebar-accent text-sidebar-accent-foreground"
                   )}
                 >
                   <Icon size={18} />
@@ -194,7 +197,7 @@ export default function Sidebar({ role }: { role: Role }) {
         </nav>
         <div
           data-sidebar-badge
-          className="mt-4 rounded-2xl border border-white/15 bg-white/5 p-4 text-xs text-white/75"
+          className="mt-4 rounded-2xl border border-sidebar-border bg-sidebar-accent/40 p-4 text-xs text-sidebar-foreground/80"
         >
           {sidebarOpen ? (
             "Upgrade data refresh to 15s cadence."

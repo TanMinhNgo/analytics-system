@@ -25,12 +25,10 @@ export function useEtlJobStream(jobId?: string) {
       return;
     }
 
-    setLogs([]);
-    setConnected(false);
-    setError(null);
     const socket = new WebSocket(`${wsUrl}${wsPath}?jobId=${jobId}`);
 
     socket.onopen = () => {
+      setError(null);
       setConnected(true);
     };
 

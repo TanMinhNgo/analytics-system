@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -47,8 +47,8 @@ export default function DataSourcesPage() {
     resolver: zodResolver(dataSourceSchema),
     defaultValues: { name: "", type: "ERP", config: {} },
   });
-  const selectedType = form.watch("type");
-  const configValues = form.watch("config");
+  const selectedType = useWatch({ control: form.control, name: "type" });
+  const configValues = useWatch({ control: form.control, name: "config" });
 
   const rows = useMemo(() => {
     return dataSourcesQuery.data.filter((source) => {
@@ -175,7 +175,7 @@ export default function DataSourcesPage() {
                 <option value="OLTP">OLTP</option>
               </Select>
             </div>
-            {configFieldsByType[selectedType].map((field) => (
+            {configFieldsByType[selectedType ?? "ERP"].map((field) => (
               <div key={field}>
                 <Input
                   placeholder={field}
