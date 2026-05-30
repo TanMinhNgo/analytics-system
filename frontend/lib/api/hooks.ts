@@ -15,6 +15,13 @@ import type { DataSource } from "@/types/datasource";
 import type { EtlJob } from "@/types/etl";
 import type { Kpi, SourceBreakdown, TimeseriesPoint } from "@/types/analytics";
 
+function normalizeEtlStatus(status: string): EtlJob["status"] {
+  if (status === "completed" || status === "success") return "success";
+  if (status === "running") return "running";
+  if (status === "queued") return "queued";
+  return "failed";
+}
+
 export function useKpis() {
   return useQuery({
     queryKey: ["analytics", "summary"],
@@ -46,7 +53,15 @@ export function useSourceBreakdown() {
 export function useEtlJobs() {
   return useQuery({
     queryKey: ["etl", "jobs"],
-    queryFn: async () => apiClient<EtlJob[]>("/api/v1/etl/jobs").catch(() => etlJobs),
+    queryFn: async () =>
+      apiClient<EtlJob[]>("/api/v1/etl/jobs")
+        .then((rows) =>
+          rows.map((row) => ({
+            ...row,
+            status: normalizeEtlStatus(row.status),
+          }))
+        )
+        .catch(() => etlJobs),
     initialData: etlJobs,
   });
 }

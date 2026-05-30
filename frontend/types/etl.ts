@@ -3,7 +3,7 @@ export type EtlStep = "SELECT" | "EXTRACT" | "TRANSFORM" | "INTEGRATE" | "LOAD";
 export type EtlJob = {
   id: string;
   name: string;
-  status: "running" | "success" | "failed" | "queued";
+  status: "queued" | "running" | "success" | "failed";
   durationMs: number;
   rowsProcessed: number;
   startedAt: string;
