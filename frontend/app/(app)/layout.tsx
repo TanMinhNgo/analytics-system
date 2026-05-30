@@ -9,9 +9,9 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const user = await getSessionUser();
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex h-screen overflow-hidden">
       <Sidebar role={user.role} />
-      <div className="flex min-h-screen flex-1 flex-col">
+      <div className="flex min-h-0 flex-1 flex-col">
         <Topbar user={user} />
         <AnimatedMain>{children}</AnimatedMain>
       </div>

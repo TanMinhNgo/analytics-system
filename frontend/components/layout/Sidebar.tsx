@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import {
   Activity,
   BarChart3,
@@ -43,7 +43,7 @@ const navItems = [
     icon: BarChart3,
     roles: ["ADMIN", "ANALYST", "VIEWER"],
   },
-  { label: "Reports", href: "/analytics", icon: FileText, roles: ["ADMIN", "ANALYST", "VIEWER"] },
+  { label: "Reports", href: "/reports", icon: FileText, roles: ["ADMIN", "ANALYST", "VIEWER"] },
   { label: "Admin", href: "/admin", icon: Settings, roles: ["ADMIN"] },
 ] satisfies NavItem[];
 
@@ -58,6 +58,7 @@ function canAccess(item: NavItem, role: Role) {
 export default function Sidebar({ role }: { role: Role }) {
   const pathname = usePathname();
   const sidebarOpen = useUiStore((state) => state.sidebarOpen);
+  const setSidebarOpen = useUiStore((state) => state.setSidebarOpen);
   const sidebarRef = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -72,42 +73,62 @@ export default function Sidebar({ role }: { role: Role }) {
     { scope: sidebarRef }
   );
 
+  useEffect(() => {
+    const syncForViewport = () => {
+      setSidebarOpen(window.innerWidth >= 768);
+    };
+    syncForViewport();
+    window.addEventListener("resize", syncForViewport);
+    return () => window.removeEventListener("resize", syncForViewport);
+  }, [setSidebarOpen]);
+
   return (
-    <aside
-      ref={sidebarRef}
-      className={cn(
-        "flex h-screen flex-col border-r border-white/10 bg-black/40 px-4 py-8 backdrop-blur",
-        sidebarOpen ? "w-64" : "w-20"
-      )}
-    >
-      <div className="mb-10 px-2">
-        <div className="text-xs uppercase tracking-[0.3em] text-(--muted)">Atlas</div>
-        <div className="mt-2 text-lg font-semibold text-white">Analytics Core</div>
-      </div>
-      <nav className="flex flex-1 flex-col gap-2">
-        {navItems
-          .filter((item) => canAccess(item, role))
-          .map((item) => {
-            const isActive = pathname.startsWith(item.href);
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.label}
-                href={item.href}
-                className={cn(
-                  "flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-white/70 transition hover:bg-white/10",
-                  isActive && "bg-white/15 text-white"
-                )}
-              >
-                <Icon size={18} />
-                {sidebarOpen ? item.label : null}
-              </Link>
-            );
-          })}
-      </nav>
-      <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-xs text-(--muted)">
-        Upgrade data refresh to 15s cadence.
-      </div>
-    </aside>
+    <>
+      <div
+        className={cn(
+          "fixed inset-0 z-30 bg-black/45 transition-opacity md:hidden",
+          sidebarOpen ? "opacity-100" : "pointer-events-none opacity-0"
+        )}
+        onClick={() => setSidebarOpen(false)}
+      />
+      <aside
+        ref={sidebarRef}
+        className={cn(
+          "fixed inset-y-0 left-0 z-40 flex w-72 flex-col border-r border-white/10 bg-black/65 px-4 py-6 backdrop-blur transition-transform duration-300 md:sticky md:top-0 md:z-10 md:h-screen md:bg-black/40",
+          sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
+          sidebarOpen ? "md:w-64" : "md:w-20"
+        )}
+      >
+        <div className="mb-6 px-2">
+          <div className="text-xs uppercase tracking-[0.3em] text-white/60">Atlas</div>
+          <div className="mt-2 text-lg font-semibold text-white">Analytics Core</div>
+        </div>
+        <nav className="flex flex-1 flex-col gap-2 overflow-y-auto pr-1">
+          {navItems
+            .filter((item) => canAccess(item, role))
+            .map((item) => {
+              const isActive = pathname.startsWith(item.href);
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  onClick={() => setSidebarOpen(false)}
+                  className={cn(
+                    "flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10",
+                    isActive && "bg-white/15 text-white"
+                  )}
+                >
+                  <Icon size={18} />
+                  {sidebarOpen ? item.label : null}
+                </Link>
+              );
+            })}
+        </nav>
+        <div className="mt-4 rounded-2xl border border-white/15 bg-white/5 p-4 text-xs text-white/75">
+          Upgrade data refresh to 15s cadence.
+        </div>
+      </aside>
+    </>
   );
 }

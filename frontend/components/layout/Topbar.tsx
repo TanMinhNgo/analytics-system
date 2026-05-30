@@ -45,9 +45,9 @@ export default function Topbar({ user }: TopbarProps) {
   return (
     <header
       ref={topbarRef}
-      className="flex items-center justify-between border-b border-white/10 px-8 py-6"
+      className="sticky top-0 z-20 flex flex-wrap items-center justify-between gap-4 border-b border-white/10 bg-black/40 px-4 py-4 backdrop-blur md:px-8 md:py-6"
     >
-      <div className="flex items-center gap-4">
+      <div className="flex min-w-0 items-center gap-3 md:gap-4">
         <button
           className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-white"
           onClick={toggleSidebar}
@@ -55,15 +55,15 @@ export default function Topbar({ user }: TopbarProps) {
         >
           <Menu size={18} />
         </button>
-        <div>
+        <div className="min-w-0">
           <Breadcrumbs />
-          <div className="mt-1 text-xl font-semibold text-white">
+          <div className="mt-1 truncate text-base font-semibold text-white md:text-xl">
             Welcome back{user?.name ? `, ${user.name}` : ""}
           </div>
         </div>
       </div>
-      <div className="flex items-center gap-3">
-        <div className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70">
+      <div className="ml-auto flex items-center gap-2 md:gap-3">
+        <div className="hidden rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80 sm:block">
           {user?.role ? roleLabels[user.role] : "Viewer"}
         </div>
         <button

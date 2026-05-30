@@ -10,6 +10,7 @@ const protectedPrefixes = [
   "/etl",
   "/warehouse",
   "/analytics",
+  "/reports",
   "/admin",
 ];
 
@@ -43,6 +44,7 @@ export const config = {
     "/etl/:path*",
     "/warehouse/:path*",
     "/analytics/:path*",
+    "/reports/:path*",
     "/admin/:path*",
   ],
 };

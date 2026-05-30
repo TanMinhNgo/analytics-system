@@ -41,7 +41,10 @@ export default function AnimatedMain({ children }: { children: React.ReactNode }
   );
 
   return (
-    <main ref={rootRef} className="flex-1 space-y-8 px-8 py-10">
+    <main
+      ref={rootRef}
+      className="min-h-0 flex-1 overflow-y-auto space-y-8 px-4 py-6 md:px-8 md:py-8"
+    >
       {children}
     </main>
   );

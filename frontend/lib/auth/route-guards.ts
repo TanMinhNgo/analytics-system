@@ -17,5 +17,9 @@ export function roleCanAccessPath(role: Role, pathname: string) {
     return role === "ADMIN" || role === "ANALYST" || role === "VIEWER";
   }
 
+  if (pathname.startsWith("/reports")) {
+    return role === "ADMIN" || role === "ANALYST" || role === "VIEWER";
+  }
+
   return true;
 }

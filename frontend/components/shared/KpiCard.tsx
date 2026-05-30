@@ -15,7 +15,7 @@ export function KpiCard({ label, value, change, isPercent }: KpiCardProps) {
     <Card className="space-y-3">
       <CardDescription>{label}</CardDescription>
       <CardTitle className="text-3xl">{formattedValue}</CardTitle>
-      <div className="text-xs text-(--muted)">
+      <div className="text-xs text-muted-foreground">
         {change >= 0 ? "+" : ""}
         {formatPercent(change)} vs last period
       </div>
