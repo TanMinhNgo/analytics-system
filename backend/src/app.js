@@ -19,6 +19,7 @@ const { warehouseRouter } = require("./routes/warehouse");
 const { analyticsRouter } = require("./routes/analytics");
 const { datamartsRouter } = require("./routes/datamarts");
 const { authRouter } = require("./routes/auth");
+const { usersRouter } = require("./routes/users");
 
 const app = express();
 
@@ -82,6 +83,7 @@ app.use(
   maskResponse,
   datamartsRouter
 );
+app.use("/api/v1/users", authRequired, rbac(["ADMIN"]), usersRouter);
 
 // Proxy non-API requests to internal Next.js server for single-service deployment.
 if (env.NODE_ENV === "production") {

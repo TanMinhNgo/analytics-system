@@ -50,7 +50,7 @@ export function TableRow({ className, ...props }: React.HTMLAttributes<HTMLTable
   return <tr ref={ref} className={cn("border-b border-border/70", className)} {...props} />;
 }
 
-export function TableCell({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) {
+export function TableCell({ className, ...props }: React.TdHTMLAttributes<HTMLTableCellElement>) {
   return <td className={cn("px-4 py-3", className)} {...props} />;
 }
 
